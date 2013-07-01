@@ -1,4 +1,4 @@
-HMMCodeStorage
+HMMCodeRepository
 ==============
 
-personal code accumulation
+personal code repository
