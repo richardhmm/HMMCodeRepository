@@ -31,16 +31,16 @@
 #include <log4cplus/layout.h>
 #include <log4cplus/configurator.h>
 
-#define LOG_DAEMON_ENABLE 0
+#define LOG_DAEMON_ENABLE 1
 
 Logger logger = Logger::getInstance(LOG4CPLUS_TEXT("logmain"));
 
 void InitLogger(void)
 {
 #if LOG_DAEMON_ENABLE // log print into file
-    PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("log4cplusd.conf"));
-#else // log print into console
     PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("log4cplus.conf"));
+#else // log print into console
+    PropertyConfigurator::doConfigure(LOG4CPLUS_TEXT("../../../res/log4cplusd.conf"));
 #endif
 }
 

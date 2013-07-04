@@ -21,7 +21,20 @@
  * @author Richard.hmm
  * @date 2013-7-4
  */
-#include <iostream>
-
+#include "gtest/gtest.h"
 #include "Log.h"
 #include "QuickSort.h"
+
+using namespace std;
+
+//TEST(QuickSort, CheckParam)
+//{
+//}
+
+int main(int argc, char* argv[])
+{
+	InitLogger();
+	testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
+}

@@ -24,8 +24,26 @@
 #ifndef QUCIKSORT_H_
 #define QUCIKSORT_H_
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
+#define FALSE false
+#define TRUE true
 
+typedef int typeQuickSort;
 
+/**
+ * @brief quick sort
+ * @param data input data pointer.
+ * @param len input data length.
+ * @param isAscend true: ascend sort; false: descend sort.
+ * @return NULL
+ */
+void QuickSort(typeQuickSort* data, typeQuickSort len, bool isAscend);
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* QUCIKSORT_H_ */
