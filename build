@@ -1,0 +1,7 @@
+#!/bin/bash
+# Filename: build
+
+make clean
+make
+cd ./lib/algorithm/
+make test
