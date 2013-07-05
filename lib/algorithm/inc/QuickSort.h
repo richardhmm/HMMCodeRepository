@@ -38,9 +38,9 @@ typedef int typeQuickSort;
  * @param data input data pointer.
  * @param len input data length.
  * @param isAscend true: ascend sort; false: descend sort.
- * @return NULL
+ * @return TRUE if QuickSort is ok
  */
-void QuickSort(typeQuickSort* data, typeQuickSort len, bool isAscend);
+bool QuickSort(typeQuickSort* data, int len, bool isAscend);
 
 #ifdef  __cplusplus
 }

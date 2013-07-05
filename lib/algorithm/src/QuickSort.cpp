@@ -26,43 +26,69 @@
 #include "Log.h"
 #include "QuickSort.h"
 
-static typeQuickSort Division(typeQuickSort* data, typeQuickSort left,
-		typeQuickSort right, bool isAscend)
+static typeQuickSort Division(typeQuickSort* data, int left,
+		int right, bool isAscend)
 {
-    // 选择一个基准元素
+    // 选择一个基准元素  select a data for base
     typeQuickSort base = data[left];
 
-    while (left < right){
-    	// 从数组的右端开始向前查找，一直找到比base小的数值为止（包括base同等数）
-        while ((left < right) && (data[right] >= base)){
-        	right--;
-        }
+	if (isAscend) { // ascend sort
+	    while (left < right){
+	    	// 从数组的右端开始向前查找，一直找到比base小的数值为止（包括base同等数）
+	        while ((left < right) && (data[right] >= base)){
+	        	right--;
+	        }
 
-        // 最终找到了比base小的元素，要做的事情就是将此元素放到base的位置
-        data[left] = data[right];
+	        // 最终找到了比base小的元素，要做的事情就是将此元素放到base的位置
+	        data[left] = data[right];
 
-        // 从数组的左端开始向前查找，一直找到比base大的数值为止（包括base同等数）
-        while ((left < right) && (data[left] <= base)){
-        	left++;
-        }
+	        // 从数组的左端开始向前查找，一直找到比base大的数值为止（包括base同等数）
+	        while ((left < right) && (data[left] <= base)){
+	        	left++;
+	        }
 
-        // 最终找到了比base大的元素，要做的事情就是将此元素放到最后的位置
-        data[right] = data[left];
-    }
+	        // 最终找到了比base大的元素，要做的事情就是将此元素放到最后的位置
+	        data[right] = data[left];
 
-    // 最后把base放到left的位置
-    data[left] = base;
+	        // 最后把base放到left的位置
+	        data[left] = base;
 
-    // 最终，我们发现left位置的左侧数值部分比left小，left位置右侧数值比left大
-    // 至此，我们完成了第一篇排序
-    return left;
+	        // 最终，我们发现left位置的左侧数值部分比left小，left位置右侧数值比left大
+	        return left;
+	    }
+	} else { // descend sort
+	    while (left < right){
+	    	// 从数组的右端开始向前查找，一直找到比base大的数值为止（包括base同等数）
+	        while ((left < right) && (data[right] <= base)){
+	        	right--;
+	        }
+
+	        // 最终找到了比base大的元素，要做的事情就是将此元素放到base的位置
+	        data[left] = data[right];
+
+	        // 从数组的左端开始向前查找，一直找到比base小的数值为止（包括base同等数）
+	        while ((left < right) && (data[left] >= base)){
+	        	left++;
+	        }
+
+	        // 最终找到了比base小的元素，要做的事情就是将此元素放到最后的位置
+	        data[right] = data[left];
+
+	        // 最后把base放到left的位置
+	        data[left] = base;
+
+	        // 最终，我们发现left位置的左侧数值部分比left大，left位置右侧数值比left小
+	        return left;
+	    }
+	}
+
 }
 
-static void QuickSort_(typeQuickSort* data, typeQuickSort left,
-		typeQuickSort right, bool isAscend)
+static void QuickSort_(typeQuickSort* data, int left,
+		int right, bool isAscend)
 {
     // 对数组进行分割，取出下次分割的基准标号
-	typeQuickSort i = Division(data, left, right, isAscend);
+	int i = Division(data, left, right, isAscend);
 
     // 对“基准标号”左侧的一组数值进行递归切割，以便将这些数据完整的排序
     if (i - 1 > left)   //大于号右面是整数1，左边是变量l
@@ -75,21 +101,27 @@ static void QuickSort_(typeQuickSort* data, typeQuickSort left,
 
 /**
  * @brief quick sort
- * @param data input data potypeQuickSorter.
+ * @param data input data pointer.
  * @param len input data length.
  * @param isAscend true: ascend sort; false: descend sort.
- * @return NULL
+ * @return TRUE if QuickSort is ok
  */
-void QuickSort(typeQuickSort* data, typeQuickSort len, bool isAscend)
+bool QuickSort(typeQuickSort* data, int len, bool isAscend)
 {
     if (NULL == data){
     	LOG_FATAL("NULL == data");
-    	return;
+    	return false;
     }
     if (len <= 0){
     	LOG_FATAL("len <= 0");
-    	return;
+    	return false;
     }
 
-    QuickSort_(data, 0, len - 1, true);
+    if (1 == len){
+    	LOG_INFO("len == 1, sort ok");
+    	return true;
+    }
+
+    QuickSort_(data, 0, len - 1, isAscend);
+    return true;
 }

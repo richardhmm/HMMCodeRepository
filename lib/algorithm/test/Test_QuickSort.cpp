@@ -27,14 +27,42 @@
 
 using namespace std;
 
-//TEST(QuickSort, CheckParam)
-//{
-//}
-
 int main(int argc, char* argv[])
 {
 	InitLogger();
 	testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();
+}
+
+TEST(QuickSort, CheckParam)
+{
+	int data[5] = {20, 40, 50, 10, 60};
+
+	// ok
+	ASSERT_TRUE(QuickSort(data, 5, true));
+
+	// check data param
+	ASSERT_FALSE(QuickSort(NULL, 5, true));
+
+	// check len param
+	ASSERT_FALSE(QuickSort(data, 0, true));
+	ASSERT_TRUE(QuickSort(data, 1, true));
+	ASSERT_FALSE(QuickSort(data, -1, true));
+
+	// check isAscend param
+	ASSERT_TRUE(QuickSort(data, 5, false));
+}
+
+TEST(QuickSort, CheckData)
+{
+	int data[5] = {20, 40, 50, 10, 60};
+
+	// check all param for ok
+	ASSERT_TRUE(QuickSort(data, 5, true));
+	ASSERT_EQ(10, data[0]);
+	ASSERT_EQ(20, data[1]);
+	ASSERT_EQ(40, data[2]);
+	ASSERT_EQ(50, data[3]);
+	ASSERT_EQ(60, data[4]);
 }
