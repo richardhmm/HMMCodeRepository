@@ -58,7 +58,7 @@ TEST(QuickSort, CheckData)
 {
 	int data[5] = {20, 40, 50, 10, 60};
 
-	// check all param for ok
+	// check data ok
 	ASSERT_TRUE(QuickSort(data, 5, true));
 	ASSERT_EQ(10, data[0]);
 	ASSERT_EQ(20, data[1]);
