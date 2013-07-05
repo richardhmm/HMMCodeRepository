@@ -31,7 +31,7 @@ extern "C" {
 #define FALSE false
 #define TRUE true
 
-typedef int typeQuickSort;
+typedef int QSort_t;
 
 /**
  * @brief quick sort
@@ -40,7 +40,7 @@ typedef int typeQuickSort;
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if QuickSort is ok
  */
-bool QuickSort(typeQuickSort* data, int len, bool isAscend);
+bool QuickSort(QSort_t* data, int len, bool isAscend);
 
 #ifdef  __cplusplus
 }

@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
 TEST(QuickSort, CheckParam)
 {
-	int data[5] = {20, 40, 50, 10, 60};
+	QSort_t data[5] = {20, 40, 50, 10, 60};
 
 	// ok
 	ASSERT_TRUE(QuickSort(data, 5, true));

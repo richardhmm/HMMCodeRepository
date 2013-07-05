@@ -26,11 +26,11 @@
 #include "Log.h"
 #include "QuickSort.h"
 
-static typeQuickSort Division(typeQuickSort* data, int left,
+static QSort_t Division(QSort_t* data, int left,
 		int right, bool isAscend)
 {
     // 选择一个基准元素  select a data for base
-    typeQuickSort base = data[left];
+    QSort_t base = data[left];
 
 	if (isAscend) { // ascend sort
 	    while (left < right){
@@ -84,7 +84,7 @@ static typeQuickSort Division(typeQuickSort* data, int left,
 
 }
 
-static void QuickSort_(typeQuickSort* data, int left,
+static void QuickSort_(QSort_t* data, int left,
 		int right, bool isAscend)
 {
     // 对数组进行分割，取出下次分割的基准标号
@@ -106,7 +106,7 @@ static void QuickSort_(typeQuickSort* data, int left,
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if QuickSort is ok
  */
-bool QuickSort(typeQuickSort* data, int len, bool isAscend)
+bool QuickSort(QSort_t* data, int len, bool isAscend)
 {
     if (NULL == data){
     	LOG_FATAL("NULL == data");
