@@ -17,6 +17,7 @@
  * @file QuickSort.cpp
  * @brief quick sort
  * @details http://www.cnblogs.com/huangxincheng/archive/2011/11/14/2249046.html
+ * 			http://www.cnblogs.com/morewindows/archive/2011/08/13/2137415.html
  * @version V1.0.0
  * @author Richard.hmm
  * @date 2013-7-4
@@ -26,77 +27,68 @@
 #include "Log.h"
 #include "QuickSort.h"
 
-static QSort_t Division(QSort_t* data, int left,
-		int right, bool isAscend)
+static void QuickSortAscend(QSort_t* s, int l, int r)
 {
-    // 选择一个基准元素  select a data for base
-    QSort_t base = data[left];
+	if (l < r)
+    {
+		//Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
+        int i = l, j = r;
+        QSort_t x = s[l];
 
-	if (isAscend) { // ascend sort
-	    while (left < right){
-	    	// 从数组的右端开始向前查找，一直找到比base小的数值为止（包括base同等数）
-	        while ((left < right) && (data[right] >= base)){
-	        	right--;
-	        }
+        while (i < j)
+        {
+            while(i < j && s[j] >= x) // 从右向左找第一个小于x的数
+            	j--;
 
-	        // 最终找到了比base小的元素，要做的事情就是将此元素放到base的位置
-	        data[left] = data[right];
+            if(i < j)
+            	s[i++] = s[j];
 
-	        // 从数组的左端开始向前查找，一直找到比base大的数值为止（包括base同等数）
-	        while ((left < right) && (data[left] <= base)){
-	        	left++;
-	        }
+            while(i < j && s[i] < x) // 从左向右找第一个大于等于x的数
+            	i++;
 
-	        // 最终找到了比base大的元素，要做的事情就是将此元素放到最后的位置
-	        data[right] = data[left];
+            if(i < j)
+            	s[j--] = s[i];
+        }
 
-	        // 最后把base放到left的位置
-	        data[left] = base;
+        s[i] = x;
+        if (l < i - 1)
+        	QuickSortAscend(s, l, i - 1); // 递归调用
 
-	        // 最终，我们发现left位置的左侧数值部分比left小，left位置右侧数值比left大
-	        return left;
-	    }
-	} else { // descend sort
-	    while (left < right){
-	    	// 从数组的右端开始向前查找，一直找到比base大的数值为止（包括base同等数）
-	        while ((left < right) && (data[right] <= base)){
-	        	right--;
-	        }
-
-	        // 最终找到了比base大的元素，要做的事情就是将此元素放到base的位置
-	        data[left] = data[right];
-
-	        // 从数组的左端开始向前查找，一直找到比base小的数值为止（包括base同等数）
-	        while ((left < right) && (data[left] >= base)){
-	        	left++;
-	        }
-
-	        // 最终找到了比base小的元素，要做的事情就是将此元素放到最后的位置
-	        data[right] = data[left];
-
-	        // 最后把base放到left的位置
-	        data[left] = base;
-
-	        // 最终，我们发现left位置的左侧数值部分比left大，left位置右侧数值比left小
-	        return left;
-	    }
-	}
-
+        if (i +1 < r)
+        	QuickSortAscend(s, i + 1, r);
+    }
 }
 
-static void QuickSort_(QSort_t* data, int left,
-		int right, bool isAscend)
+static void QuickSortDescend(QSort_t* s, int l, int r)
 {
-    // 对数组进行分割，取出下次分割的基准标号
-	int i = Division(data, left, right, isAscend);
+	if (l < r)
+    {
+		//Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
+        int i = l, j = r;
+        QSort_t x = s[l];
 
-    // 对“基准标号”左侧的一组数值进行递归切割，以便将这些数据完整的排序
-    if (i - 1 > left)   //大于号右面是整数1，左边是变量l
-        QuickSort_(data, left, i - 1, isAscend);
+        while (i < j)
+        {
+            while(i < j && s[j] < x) // 从右向左找第一个大于x的数
+            	j--;
 
-    // 对“基准标号”右侧的一组数值进行递归切割，以便将这些数据完整的排序
-    if (right > i + 1)
-        QuickSort_(data, i + 1, right, isAscend);
+            if(i < j)
+            	s[i++] = s[j];
+
+            while(i < j && s[i] >= x) // 从左向右找第一个小于等于x的数
+            	i++;
+
+            if(i < j)
+            	s[j--] = s[i];
+        }
+
+        s[i] = x;
+        if (l < i - 1)
+        	QuickSortDescend(s, l, i - 1); // 递归调用
+
+        if (i +1 < r)
+        	QuickSortDescend(s, i + 1, r);
+    }
 }
 
 /**
@@ -122,6 +114,12 @@ bool QuickSort(QSort_t* data, int len, bool isAscend)
     	return true;
     }
 
-    QuickSort_(data, 0, len - 1, isAscend);
+    if (isAscend) {
+    	QuickSortAscend(data, 0, len - 1);
+    } else {
+    	QuickSortDescend(data, 0, len - 1);
+    }
+
     return true;
 }
+

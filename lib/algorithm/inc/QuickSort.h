@@ -42,6 +42,7 @@ typedef int QSort_t;
  */
 bool QuickSort(QSort_t* data, int len, bool isAscend);
 
+
 #ifdef  __cplusplus
 }
 #endif

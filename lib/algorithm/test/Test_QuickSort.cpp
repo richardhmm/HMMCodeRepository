@@ -56,7 +56,7 @@ TEST(QuickSort, CheckParam)
 
 TEST(QuickSort, CheckData)
 {
-	int data[5] = {20, 40, 50, 10, 60};
+	QSort_t data[5] = {20, 40, 50, 10, 60};
 
 	// check data ok
 	ASSERT_TRUE(QuickSort(data, 5, true));
@@ -65,4 +65,71 @@ TEST(QuickSort, CheckData)
 	ASSERT_EQ(40, data[2]);
 	ASSERT_EQ(50, data[3]);
 	ASSERT_EQ(60, data[4]);
+}
+
+TEST(QuickSort, CheckData1)
+{
+	QSort_t data[5] = {20, 40, 50, 20, 60};
+
+	// check data ok
+	ASSERT_TRUE(QuickSort(data, 5, true));
+	ASSERT_EQ(20, data[0]);
+	ASSERT_EQ(20, data[1]);
+	ASSERT_EQ(40, data[2]);
+	ASSERT_EQ(50, data[3]);
+	ASSERT_EQ(60, data[4]);
+}
+
+TEST(QuickSort, CheckData2)
+{
+	QSort_t data[6] = {20, 40, 50, 20, 60, 20};
+
+	// check data ok
+	ASSERT_TRUE(QuickSort(data, 6, true));
+	ASSERT_EQ(20, data[0]);
+	ASSERT_EQ(20, data[1]);
+	ASSERT_EQ(20, data[2]);
+	ASSERT_EQ(40, data[3]);
+	ASSERT_EQ(50, data[4]);
+	ASSERT_EQ(60, data[5]);
+}
+
+TEST(QuickSort, CheckData3)
+{
+	QSort_t data[5] = {20, 40, 50, 10, 60};
+
+	// check data ok
+	ASSERT_TRUE(QuickSort(data, 5, false));
+	ASSERT_EQ(10, data[4]);
+	ASSERT_EQ(20, data[3]);
+	ASSERT_EQ(40, data[2]);
+	ASSERT_EQ(50, data[1]);
+	ASSERT_EQ(60, data[0]);
+}
+
+TEST(QuickSort, CheckData4)
+{
+	QSort_t data[5] = {20, 40, 50, 20, 60};
+
+	// check data ok
+	ASSERT_TRUE(QuickSort(data, 5, false));
+	ASSERT_EQ(20, data[4]);
+	ASSERT_EQ(20, data[3]);
+	ASSERT_EQ(40, data[2]);
+	ASSERT_EQ(50, data[1]);
+	ASSERT_EQ(60, data[0]);
+}
+
+TEST(QuickSort, CheckData5)
+{
+	QSort_t data[6] = {20, 40, 50, 20, 60, 20};
+
+	// check data ok
+	ASSERT_TRUE(QuickSort(data, 6, false));
+	ASSERT_EQ(20, data[5]);
+	ASSERT_EQ(20, data[4]);
+	ASSERT_EQ(20, data[3]);
+	ASSERT_EQ(40, data[2]);
+	ASSERT_EQ(50, data[1]);
+	ASSERT_EQ(60, data[0]);
 }
