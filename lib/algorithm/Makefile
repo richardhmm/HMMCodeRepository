@@ -38,6 +38,7 @@ SHAREDLIBVER = $(SHAREDLIB).$(VERSION)
 
 SRCS = $(addprefix src/, \
 	QuickSort.cpp \
+	BubbleSort.cpp \
 	Log.cpp \
 	)
 
@@ -46,10 +47,12 @@ OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
 HDRS = $(addprefix inc/, \
     Log.h \
 	QuickSort.h \
+	BubbleSort.h \
 	) 
 
 TESTS = $(addprefix test/, \
 	Test_QuickSort.cpp \
+	Test_BubbleSort.cpp \
 	)
 
 TESTS_OBJS = $(TESTS:.cpp=.o)

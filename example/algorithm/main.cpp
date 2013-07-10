@@ -26,13 +26,14 @@
 
 #include "Log.h"
 #include "QuickSort.h"
+#include "BubbleSort.h"
 
 using namespace std;
 
-int main(int argc, char* argv[])
+static void qsort()
 {
+	LOG_INFO("in qsort()");
 	int len = 0;
-	InitLogger();
 
     // 10 random number to sort
 	len = 10;
@@ -109,6 +110,97 @@ int main(int argc, char* argv[])
     	if ((i + 1) % 20 == 0)
     		printf("\n");
     }
+}
+
+static void bsort()
+{
+	LOG_INFO("in bsort()");
+
+	int len = 0;
+
+    // 10 random number to sort
+	len = 10;
+    BSort_t data1[len];
+    printf("\n\n===================1===================\n");
+    for (int i = 0; i < len; i++){
+    	data1[i] = rand()%9 + 1;
+    	printf("%3d  ", data1[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("1. sort start");
+    BubbleSort(data1, len, true);
+    LOG_INFO("1. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d  ", data1[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+
+    // 100 random number to sort
+    len = 100;
+    BSort_t data2[len];
+    printf("\n\n===================2===================\n");
+    for (int i = 0; i < len; i++){
+    	data2[i] = rand()%9 + 1;
+    	printf("%3d  ", data2[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("2. sort start");
+    BubbleSort(data2, len, true);
+    LOG_INFO("2. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d  ", data2[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+
+    // 1000 random number to sort
+    len = 1000;
+    BSort_t data3[len];
+    printf("\n\n===================3===================\n");
+    for (int i = 0; i < len; i++){
+    	data3[i] = rand()%8 + 1;
+    	printf("%3d ", data3[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("3. sort start");
+    BubbleSort(data3, len, true);
+    LOG_INFO("3. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d ", data3[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+
+    // 1000 random number to sort
+    len = 1000;
+    BSort_t data4[len];
+    printf("\n\n===================4===================\n");
+    for (int i = 0; i < len; i++){
+    	data4[i] = rand()%8 + 1;
+    	printf("%3d ", data4[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("4. sort start");
+    BubbleSort(data4, len, false);
+    LOG_INFO("4. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d ", data4[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+}
+
+int main(int argc, char* argv[])
+{
+	InitLogger();
+
+	qsort();
+	bsort();
 
     return 0;
 }
