@@ -1,0 +1,16 @@
+#!/bin/bash
+# Filename: build-gtest
+
+# 1. compile lib
+make clean
+make
+
+
+# 2. example
+#cd ./example/algorithm/
+#./main
+
+# 3. gtest
+#cd ../../
+cd ./lib/algorithm/
+make test

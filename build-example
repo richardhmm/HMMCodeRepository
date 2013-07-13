@@ -1,0 +1,11 @@
+#!/bin/bash
+# Filename: build-example
+
+# 1. compile lib
+make clean
+make
+
+
+# 2. example
+cd ./example/algorithm/
+./main

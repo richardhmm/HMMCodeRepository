@@ -1,0 +1,6 @@
+#!/bin/bash
+# Filename: build-lib
+
+# 1. compile lib
+make clean
+make
