@@ -3,13 +3,13 @@ HMMCodeRepository
 personal code repository
 
 
-compile environment
+Compile environment
 -----------
 1. Linux (Ubuntu 10.04.4 LTS x86_64), G++, Makefile.
 2. install log4cplus.
 3. install gtest.
 
-Build Instructions
+Build instructions
 -----------
 1. build library && example && unit test
 ```c
@@ -33,4 +33,18 @@ $ ./build-example
 ```c
 $ cd HMMCodeRepository
 $ ./build-gtest
+```
+
+Path tree instructions
+-----------
+```c
+HMMCodeRepository  // library root path
+|-- example        // demo code
+|   `-- algorithm
+|-- lib           // library source code
+|   `-- algorithm
+|       |-- inc   // interface include files
+|       |-- src   // many algorithm source code
+|       `-- test  // unit test source code by using gtest
+`-- res           // resource
 ```

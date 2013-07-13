@@ -28,6 +28,7 @@
 #include "QuickSort.h"
 #include "BubbleSort.h"
 #include "InsertSort.h"
+#include "SelectSort.h"
 
 using namespace std;
 
@@ -279,13 +280,97 @@ static void isort()
     }
 }
 
+static void ssort()
+{
+	LOG_INFO("in ssort()");
+
+	int len = 0;
+
+    // 10 random number to sort
+	len = 10;
+    SSort_t data1[len];
+    printf("\n\n===================1===================\n");
+    for (int i = 0; i < len; i++){
+    	data1[i] = rand()%9 + 1;
+    	printf("%3d  ", data1[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("1. sort start");
+    SelectSort(data1, len, true);
+    LOG_INFO("1. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d  ", data1[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+
+    // 100 random number to sort
+    len = 100;
+    SSort_t data2[len];
+    printf("\n\n===================2===================\n");
+    for (int i = 0; i < len; i++){
+    	data2[i] = rand()%9 + 1;
+    	printf("%3d  ", data2[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("2. sort start");
+    SelectSort(data2, len, true);
+    LOG_INFO("2. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d  ", data2[i]);
+    	if ((i + 1) % 5 == 0)
+    		printf("\n");
+    }
+
+    // 1000 random number to sort
+    len = 1000;
+    SSort_t data3[len];
+    printf("\n\n===================3===================\n");
+    for (int i = 0; i < len; i++){
+    	data3[i] = rand()%8 + 1;
+    	printf("%3d ", data3[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("3. sort start");
+    SelectSort(data3, len, true);
+    LOG_INFO("3. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d ", data3[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+
+    // 1000 random number to sort
+    len = 1000;
+    SSort_t data4[len];
+    printf("\n\n===================4===================\n");
+    for (int i = 0; i < len; i++){
+    	data4[i] = rand()%8 + 1;
+    	printf("%3d ", data4[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+    LOG_INFO("4. sort start");
+    SelectSort(data4, len, false);
+    LOG_INFO("4. sort end");
+    for (int i = 0; i < len; i++){
+    	printf("%3d ", data4[i]);
+    	if ((i + 1) % 20 == 0)
+    		printf("\n");
+    }
+}
+
 int main(int argc, char* argv[])
 {
 	InitLogger();
 
 //	qsort();
 //	bsort();
-	isort();
+//	isort();
+	ssort();
 
     return 0;
 }

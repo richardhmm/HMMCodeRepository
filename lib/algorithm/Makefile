@@ -40,6 +40,7 @@ SRCS = $(addprefix src/, \
 	QuickSort.cpp \
 	BubbleSort.cpp \
 	InsertSort.cpp \
+	SelectSort.cpp \
 	Log.cpp \
 	)
 
@@ -50,12 +51,14 @@ HDRS = $(addprefix inc/, \
 	QuickSort.h \
 	BubbleSort.h \
 	InsertSort.h \
+	SelectSort.h \
 	) 
 
 TESTS = $(addprefix test/, \
 	Test_QuickSort.cpp \
 	Test_BubbleSort.cpp \
 	Test_InsertSort.cpp \
+	Test_SelectSort.cpp \
 	)
 
 TESTS_OBJS = $(TESTS:.cpp=.o)
