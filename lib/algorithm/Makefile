@@ -12,7 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-VERSION = 0.0.1
+VERSION = 1.0
 LIBNAME = algorithm
 
 CC = g++
@@ -39,6 +39,7 @@ SHAREDLIBVER = $(SHAREDLIB).$(VERSION)
 SRCS = $(addprefix src/, \
 	QuickSort.cpp \
 	BubbleSort.cpp \
+	InsertSort.cpp \
 	Log.cpp \
 	)
 
@@ -48,11 +49,13 @@ HDRS = $(addprefix inc/, \
     Log.h \
 	QuickSort.h \
 	BubbleSort.h \
+	InsertSort.h \
 	) 
 
 TESTS = $(addprefix test/, \
 	Test_QuickSort.cpp \
 	Test_BubbleSort.cpp \
+	Test_InsertSort.cpp \
 	)
 
 TESTS_OBJS = $(TESTS:.cpp=.o)
