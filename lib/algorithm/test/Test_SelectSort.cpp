@@ -1,17 +1,17 @@
 /*
-   Copyright (c) 2013 richard.hmm
+ Copyright (c) 2013 richard.hmm
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
  */
 /**
  * @file Test_SelectSort.cpp
@@ -32,12 +32,13 @@ int main(int argc, char* argv[])
 	InitLogger();
 	testing::InitGoogleTest(&argc, argv);
 
-    return RUN_ALL_TESTS();
+	return RUN_ALL_TESTS();
 }
 
 TEST(SelectSort, CheckParam)
 {
-	SSort_t data[5] = {20, 40, 50, 10, 60};
+	SSort_t data[5] =
+	{	20, 40, 50, 10, 60};
 
 	// ok
 	ASSERT_TRUE(SelectSort(data, 5, true));
@@ -56,7 +57,8 @@ TEST(SelectSort, CheckParam)
 
 TEST(SelectSort, CheckData)
 {
-	SSort_t data[5] = {20, 40, 50, 10, 60};
+	SSort_t data[5] =
+	{	20, 40, 50, 10, 60};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 5, true));
@@ -69,7 +71,8 @@ TEST(SelectSort, CheckData)
 
 TEST(SelectSort, CheckData1)
 {
-	SSort_t data[5] = {20, 40, 50, 20, 60};
+	SSort_t data[5] =
+	{	20, 40, 50, 20, 60};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 5, true));
@@ -82,7 +85,8 @@ TEST(SelectSort, CheckData1)
 
 TEST(SelectSort, CheckData2)
 {
-	SSort_t data[6] = {20, 40, 50, 20, 60, 20};
+	SSort_t data[6] =
+	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 6, true));
@@ -96,7 +100,8 @@ TEST(SelectSort, CheckData2)
 
 TEST(SelectSort, CheckData3)
 {
-	SSort_t data[5] = {20, 40, 50, 10, 60};
+	SSort_t data[5] =
+	{	20, 40, 50, 10, 60};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 5, false));
@@ -109,7 +114,8 @@ TEST(SelectSort, CheckData3)
 
 TEST(SelectSort, CheckData4)
 {
-	SSort_t data[5] = {20, 40, 50, 20, 60};
+	SSort_t data[5] =
+	{	20, 40, 50, 20, 60};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 5, false));
@@ -122,7 +128,8 @@ TEST(SelectSort, CheckData4)
 
 TEST(SelectSort, CheckData5)
 {
-	SSort_t data[6] = {20, 40, 50, 20, 60, 20};
+	SSort_t data[6] =
+	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok
 	ASSERT_TRUE(SelectSort(data, 6, false));
