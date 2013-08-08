@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -26,9 +26,9 @@
 #include "Log.h"
 #include "InsertSort.h"
 
-static void InsertSortAscend(ISort_t a[], int n)
+static void InsertSortAscend(ISortType a[], int n)
 {
-	ISort_t temp;
+	ISortType temp;
 	int i, j;
 
 	for (i = 1; i < n; i++)
@@ -45,9 +45,9 @@ static void InsertSortAscend(ISort_t a[], int n)
 	}
 }
 
-static void InsertSortDescend(ISort_t a[], int n)
+static void InsertSortDescend(ISortType a[], int n)
 {
-	ISort_t temp;
+	ISortType temp;
 	int i, j;
 
 	for (i = 1; i < n; i++)
@@ -71,7 +71,7 @@ static void InsertSortDescend(ISort_t a[], int n)
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if InsertSort is ok
  */
-bool InsertSort(ISort_t data[], int len, bool isAscend)
+bool InsertSort(ISortType data[], int len, bool isAscend)
 {
 	if (NULL == data)
 	{

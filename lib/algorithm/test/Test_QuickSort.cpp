@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
 TEST(QuickSort, CheckParam)
 {
-	QSort_t data[5] =
+	QSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// ok
@@ -57,7 +57,7 @@ TEST(QuickSort, CheckParam)
 
 TEST(QuickSort, CheckData)
 {
-	QSort_t data[5] =
+	QSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// check data ok
@@ -71,7 +71,7 @@ TEST(QuickSort, CheckData)
 
 TEST(QuickSort, CheckData1)
 {
-	QSort_t data[5] =
+	QSortType data[5] =
 	{	20, 40, 50, 20, 60};
 
 	// check data ok
@@ -85,7 +85,7 @@ TEST(QuickSort, CheckData1)
 
 TEST(QuickSort, CheckData2)
 {
-	QSort_t data[6] =
+	QSortType data[6] =
 	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok
@@ -100,7 +100,7 @@ TEST(QuickSort, CheckData2)
 
 TEST(QuickSort, CheckData3)
 {
-	QSort_t data[5] =
+	QSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// check data ok
@@ -114,7 +114,7 @@ TEST(QuickSort, CheckData3)
 
 TEST(QuickSort, CheckData4)
 {
-	QSort_t data[5] =
+	QSortType data[5] =
 	{	20, 40, 50, 20, 60};
 
 	// check data ok
@@ -128,7 +128,7 @@ TEST(QuickSort, CheckData4)
 
 TEST(QuickSort, CheckData5)
 {
-	QSort_t data[6] =
+	QSortType data[6] =
 	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok

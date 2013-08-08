@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
 TEST(BubbleSort, CheckParam)
 {
-	BSort_t data[5] =
+	BSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// ok
@@ -57,7 +57,7 @@ TEST(BubbleSort, CheckParam)
 
 TEST(BubbleSort, CheckData)
 {
-	BSort_t data[5] =
+	BSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// check data ok
@@ -71,7 +71,7 @@ TEST(BubbleSort, CheckData)
 
 TEST(BubbleSort, CheckData1)
 {
-	BSort_t data[5] =
+	BSortType data[5] =
 	{	20, 40, 50, 20, 60};
 
 	// check data ok
@@ -85,7 +85,7 @@ TEST(BubbleSort, CheckData1)
 
 TEST(BubbleSort, CheckData2)
 {
-	BSort_t data[6] =
+	BSortType data[6] =
 	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok
@@ -100,7 +100,7 @@ TEST(BubbleSort, CheckData2)
 
 TEST(BubbleSort, CheckData3)
 {
-	BSort_t data[5] =
+	BSortType data[5] =
 	{	20, 40, 50, 10, 60};
 
 	// check data ok
@@ -114,7 +114,7 @@ TEST(BubbleSort, CheckData3)
 
 TEST(BubbleSort, CheckData4)
 {
-	BSort_t data[5] =
+	BSortType data[5] =
 	{	20, 40, 50, 20, 60};
 
 	// check data ok
@@ -128,7 +128,7 @@ TEST(BubbleSort, CheckData4)
 
 TEST(BubbleSort, CheckData5)
 {
-	BSort_t data[6] =
+	BSortType data[6] =
 	{	20, 40, 50, 20, 60, 20};
 
 	// check data ok

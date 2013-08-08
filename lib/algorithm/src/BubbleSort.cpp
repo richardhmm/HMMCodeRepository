@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -26,11 +26,11 @@
 #include "Log.h"
 #include "BubbleSort.h"
 
-static void BubbleSortAscend(BSort_t a[], int n)
+static void BubbleSortAscend(BSortType a[], int n)
 {
 	int j, k;
 	int flag;
-	BSort_t temp;
+	BSortType temp;
 
 	flag = n;
 	while (flag > 0)
@@ -50,11 +50,11 @@ static void BubbleSortAscend(BSort_t a[], int n)
 	}
 }
 
-static void BubbleSortDescend(BSort_t a[], int n)
+static void BubbleSortDescend(BSortType a[], int n)
 {
 	int j, k;
 	int flag;
-	BSort_t temp;
+	BSortType temp;
 
 	flag = n;
 	while (flag > 0)
@@ -81,7 +81,7 @@ static void BubbleSortDescend(BSort_t a[], int n)
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if BubbleSort is ok
  */
-bool BubbleSort(BSort_t data[], int len, bool isAscend)
+bool BubbleSort(BSortType data[], int len, bool isAscend)
 {
 	if (NULL == data)
 	{

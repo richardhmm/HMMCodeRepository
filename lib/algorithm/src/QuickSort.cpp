@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -27,13 +27,13 @@
 #include "Log.h"
 #include "QuickSort.h"
 
-static void QuickSortAscend(QSort_t* s, int l, int r)
+static void QuickSortAscend(QSortType* s, int l, int r)
 {
 	if (l < r)
 	{
 		//Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
 		int i = l, j = r;
-		QSort_t x = s[l];
+		QSortType x = s[l];
 
 		while (i < j)
 		{
@@ -59,13 +59,13 @@ static void QuickSortAscend(QSort_t* s, int l, int r)
 	}
 }
 
-static void QuickSortDescend(QSort_t* s, int l, int r)
+static void QuickSortDescend(QSortType* s, int l, int r)
 {
 	if (l < r)
 	{
 		//Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
 		int i = l, j = r;
-		QSort_t x = s[l];
+		QSortType x = s[l];
 
 		while (i < j)
 		{
@@ -98,7 +98,7 @@ static void QuickSortDescend(QSort_t* s, int l, int r)
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if QuickSort is ok
  */
-bool QuickSort(QSort_t* data, int len, bool isAscend)
+bool QuickSort(QSortType* data, int len, bool isAscend)
 {
 	if (NULL == data)
 	{

@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -32,7 +32,7 @@ extern "C"
 #define FALSE false
 #define TRUE true
 
-typedef int QSort_t;
+typedef int QSortType;
 
 /**
  * @brief quick sort
@@ -41,7 +41,7 @@ typedef int QSort_t;
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if QuickSort is ok
  */
-bool QuickSort(QSort_t* data, int len, bool isAscend);
+bool QuickSort(QSortType* data, int len, bool isAscend);
 
 #ifdef  __cplusplus
 }

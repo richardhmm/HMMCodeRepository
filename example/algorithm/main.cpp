@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -39,7 +39,7 @@ static void qsort()
 
 	// 10 random number to sort
 	len = 10;
-	QSort_t data1[len];
+	QSortType data1[len];
 	printf("\n\n===================1===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -60,7 +60,7 @@ static void qsort()
 
 	// 100 random number to sort
 	len = 100;
-	QSort_t data2[len];
+	QSortType data2[len];
 	printf("\n\n===================2===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -81,7 +81,7 @@ static void qsort()
 
 	// 1000 random number to sort
 	len = 1000;
-	QSort_t data3[len];
+	QSortType data3[len];
 	printf("\n\n===================3===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -102,7 +102,7 @@ static void qsort()
 
 	// 1000 random number to sort
 	len = 1000;
-	QSort_t data4[len];
+	QSortType data4[len];
 	printf("\n\n===================4===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -130,7 +130,7 @@ static void bsort()
 
 	// 10 random number to sort
 	len = 10;
-	BSort_t data1[len];
+	BSortType data1[len];
 	printf("\n\n===================1===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -151,7 +151,7 @@ static void bsort()
 
 	// 100 random number to sort
 	len = 100;
-	BSort_t data2[len];
+	BSortType data2[len];
 	printf("\n\n===================2===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -172,7 +172,7 @@ static void bsort()
 
 	// 1000 random number to sort
 	len = 1000;
-	BSort_t data3[len];
+	BSortType data3[len];
 	printf("\n\n===================3===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -193,7 +193,7 @@ static void bsort()
 
 	// 1000 random number to sort
 	len = 1000;
-	BSort_t data4[len];
+	BSortType data4[len];
 	printf("\n\n===================4===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -221,7 +221,7 @@ static void isort()
 
 	// 10 random number to sort
 	len = 10;
-	ISort_t data1[len];
+	ISortType data1[len];
 	printf("\n\n===================1===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -242,7 +242,7 @@ static void isort()
 
 	// 100 random number to sort
 	len = 100;
-	ISort_t data2[len];
+	ISortType data2[len];
 	printf("\n\n===================2===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -263,7 +263,7 @@ static void isort()
 
 	// 1000 random number to sort
 	len = 1000;
-	ISort_t data3[len];
+	ISortType data3[len];
 	printf("\n\n===================3===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -284,7 +284,7 @@ static void isort()
 
 	// 1000 random number to sort
 	len = 1000;
-	ISort_t data4[len];
+	ISortType data4[len];
 	printf("\n\n===================4===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -312,7 +312,7 @@ static void ssort()
 
 	// 10 random number to sort
 	len = 10;
-	SSort_t data1[len];
+	SSortType data1[len];
 	printf("\n\n===================1===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -333,7 +333,7 @@ static void ssort()
 
 	// 100 random number to sort
 	len = 100;
-	SSort_t data2[len];
+	SSortType data2[len];
 	printf("\n\n===================2===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -354,7 +354,7 @@ static void ssort()
 
 	// 1000 random number to sort
 	len = 1000;
-	SSort_t data3[len];
+	SSortType data3[len];
 	printf("\n\n===================3===================\n");
 	for (int i = 0; i < len; i++)
 	{
@@ -375,7 +375,7 @@ static void ssort()
 
 	// 1000 random number to sort
 	len = 1000;
-	SSort_t data4[len];
+	SSortType data4[len];
 	printf("\n\n===================4===================\n");
 	for (int i = 0; i < len; i++)
 	{

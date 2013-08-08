@@ -3,7 +3,7 @@
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+ You may obtain a coy of the License at
 
  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -26,14 +26,14 @@
 #include "Log.h"
 #include "SelectSort.h"
 
-static void Swap(SSort_t& a, SSort_t& b)
+static void Swap(SSortType& a, SSortType& b)
 {
-	SSort_t temp = a;
+	SSortType temp = a;
 	a = b;
 	b = temp;
 }
 
-static void SelectSortAscend(SSort_t a[], int n)
+static void SelectSortAscend(SSortType a[], int n)
 {
 	int i, j;
 	int nMin = 0;
@@ -52,7 +52,7 @@ static void SelectSortAscend(SSort_t a[], int n)
 	}
 }
 
-static void SelectSortDescend(SSort_t a[], int n)
+static void SelectSortDescend(SSortType a[], int n)
 {
 	int i, j;
 	int nMax = 0;
@@ -78,7 +78,7 @@ static void SelectSortDescend(SSort_t a[], int n)
  * @param isAscend true: ascend sort; false: descend sort.
  * @return TRUE if SelectSort is ok
  */
-bool SelectSort(SSort_t data[], int len, bool isAscend)
+bool SelectSort(SSortType data[], int len, bool isAscend)
 {
 	if (NULL == data)
 	{
