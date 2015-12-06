@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 #include "types.h"
+#include "debug.h"
 
 /**
  * @brief print
@@ -29,8 +30,20 @@
  * @return 0
  */
 INT32
-main(int argc, char **argv)
+main(INT32 argc, INT8 **argv)
 {
     printf("hello c_demo\n");
+
+    debugconf.debuglevel = LOG_DEBUG;
+
+    debug(LOG_EMERG, "log level: emerg");
+    debug(LOG_ALERT, "log level: alert");
+    debug(LOG_CRIT, "log level: crit");
+    debug(LOG_ERR, "log level: error");
+    debug(LOG_WARNING, "log level: warning");
+    debug(LOG_NOTICE, "log level: notice");
+    debug(LOG_INFO, "log level: info");
+    debug(LOG_DEBUG, "log level: debug");
+
     return 0;
 }
