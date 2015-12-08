@@ -20,6 +20,10 @@
  * @author Copyright (C) 2015 Richard.hmm  <sunhyx@gmail.com>
  */
 #include <stdio.h>
+#include <syslog.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <errno.h>
 
 #include "types.h"
 #include "debug.h"
@@ -32,6 +36,10 @@
 INT32
 main(INT32 argc, INT8 **argv)
 {
+	INT32 rc;
+	INT32 listenfd;
+	INT8 buffer[50];
+
     printf("hello c_demo\n");
 
     debugconf.debuglevel = LOG_DEBUG;
@@ -43,7 +51,53 @@ main(INT32 argc, INT8 **argv)
     debug(LOG_WARNING, "log level: warning");
     debug(LOG_NOTICE, "log level: notice");
     debug(LOG_INFO, "log level: info");
-    debug(LOG_DEBUG, "log level: debug");
+	debug(LOG_DEBUG, "log level: debug");
+
+	listenfd = create_tcp_server(8008);
+	while (1) {
+		INT32 clifd;
+		struct sockaddr_in cliaddr;
+		socklen_t clilen;
+
+		clilen = sizeof(cliaddr);
+		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen);
+		if (clifd < 0)
+			continue;
+
+		debug(LOG_NOTICE, "Connection established %s\r\n", inet_ntoa(cliaddr.sin_addr));
+		while (1) {
+			rc = wait_connect(clifd);
+
+			if (rc < 0) { // failed
+				debug(LOG_ERR, " recv() failed");
+				break;
+			}
+
+			if (rc > 0) { // something to read
+				rc = recv(clifd, buffer, sizeof(buffer), 0);
+				if (rc < 0) {
+					if (errno != EWOULDBLOCK) {
+						debug(LOG_ERR, " recv() failed");
+						break;
+					}
+				} else if (rc == 0) {
+					debug(LOG_NOTICE, "Connection closed\r\n");
+					break;
+				} else {
+					debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
+					rc = send(clifd, buffer, rc, 0);
+					if (rc < 0)
+					{
+						debug(LOG_ERR, "send() error\r\n");
+						break;
+					}
+					else
+						debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
+				}
+			}
+		}
+		close(clifd);
+	}
 
     return 0;
 }

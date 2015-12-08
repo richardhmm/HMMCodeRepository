@@ -89,7 +89,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_c_demo_OBJECTS = debug.$(OBJEXT) main.$(OBJEXT)
+am_c_demo_OBJECTS = debug.$(OBJEXT) tcp_socket.$(OBJEXT) \
+	main.$(OBJEXT)
 c_demo_OBJECTS = $(am_c_demo_OBJECTS)
 c_demo_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -232,7 +233,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
-c_demo_SOURCES = types.h common.h debug.h debug.c main.c 
+c_demo_SOURCES = types.h common.h debug.h debug.c tcp_socket.h tcp_socket.c main.c 
 all: all-am
 
 .SUFFIXES:
@@ -322,6 +323,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tcp_socket.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
