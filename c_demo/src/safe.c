@@ -43,7 +43,7 @@ static void cleanup_fds(void);
 
 /** List of fd's to close on fork. */
 typedef struct _fd_list {
-    int fd;                 /**< @brief file descriptor */
+    INT32 fd;                 /**< @brief file descriptor */
     struct _fd_list *next;  /**< @brief linked list pointer */
 } fd_list_t;
 
@@ -68,7 +68,7 @@ cleanup_fds(void)
  * @param fd A file descriptor.
  */
 void
-register_fd_cleanup_on_fork(const int fd)
+register_fd_cleanup_on_fork(const INT32 fd)
 {
     fd_list_t *entry = safe_malloc(sizeof(fd_list_t));
 
@@ -118,10 +118,10 @@ safe_realloc(void *ptr, size_t newsize)
  * @param s String to duplicate
  * @return A string in a newly allocated chunk of heap.
  */
-char *
-safe_strdup(const char *s)
+INT8 *
+safe_strdup(const INT8 *s)
 {
-    char *retval = NULL;
+    INT8 *retval = NULL;
     if (!s) {
         debug(LOG_CRIT, "safe_strdup called with NULL which would have crashed strdup. Bailing out");
         exit(1);
@@ -139,13 +139,13 @@ safe_strdup(const char *s)
  * @param strp Pointer to a pointer that will be set to the newly allocated string
  * @param fmt Format string like sprintf
  * @param ... Variable number of arguments for format string
- * @return int Size of allocated string.
+ * @return INT32 Size of allocated string.
  */
-int
-safe_asprintf(char **strp, const char *fmt, ...)
+INT32
+safe_asprintf(INT8 **strp, const INT8 *fmt, ...)
 {
     va_list ap;
-    int retval;
+    INT32 retval;
 
     va_start(ap, fmt);
     retval = safe_vasprintf(strp, fmt, ap);
@@ -159,12 +159,12 @@ safe_asprintf(char **strp, const char *fmt, ...)
  * @param strp Pointer to a pointer that will be set to the newly allocated string
  * @param fmt Format string like sprintf
  * @param ap pre-digested va_list of arguments.
- * @return int Size of allocated string.
+ * @return INT32 Size of allocated string.
  */
-int
-safe_vasprintf(char **strp, const char *fmt, va_list ap)
+INT32
+safe_vasprintf(INT8 **strp, const INT8 *fmt, va_list ap)
 {
-    int retval;
+    INT32 retval;
 
     retval = vasprintf(strp, fmt, ap);
 

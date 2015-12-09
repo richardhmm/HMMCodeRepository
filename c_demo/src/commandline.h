@@ -1,4 +1,4 @@
-/* vim: set et ts=4 sts=4 sw=4 : */
+/* vim: set et sw=4 ts=4 sts=4 : */
 /********************************************************************\
  * This program is free software; you can redistribute it and/or    *
  * modify it under the terms of the GNU General Public License as   *
@@ -20,38 +20,27 @@
 \********************************************************************/
 
 /* $Id$ */
-/** @file safe.h
-	  @brief Safe versions of stdlib/string functions that error out and exit if memory allocation fails
-	  @author Copyright (C) 2005 Mina Naguib <mina@ilesansfil.org>
+/** @file commandline.h
+    @brief Command line argument handling
+    @author Copyright (C) 2004 Philippe April <papril777@yahoo.com>
 */
 
-#ifndef _SAFE_H_
-#define _SAFE_H_
+#ifndef _COMMANDLINE_H_
+#define _COMMANDLINE_H_
 
-#include <stdarg.h>             /* For va_list */
-#include <sys/types.h>          /* For fork */
-#include <unistd.h>             /* For fork */
 #include "types.h"
+/*
+ * Holds an argv that could be passed to exec*() if we restart ourselves
+ */
+extern INT8 **restartargv;
 
-/** Register an fd for auto-cleanup on fork() */
-void register_fd_cleanup_on_fork(const INT32);
+/**
+ * A flag to denote whether we were restarted via a parent wifidog, or started normally
+ * 0 means normally, otherwise it will be populated by the PID of the parent
+ */
+extern pid_t restart_orig_pid;
 
-/** @brief Safe version of malloc */
-void *safe_malloc(size_t);
+/** @brief Parses the command line and set the config accordingly */
+void parse_commandline(INT32, INT8 **);
 
-/** @brief Safe version of realloc */
-void *safe_realloc(void *, size_t);
-
-/* @brief Safe version of strdup */
-INT8 *safe_strdup(const INT8 *);
-
-/* @brief Safe version of asprintf */
-INT32 safe_asprintf(INT8 **, const INT8 *, ...);
-
-/* @brief Safe version of vasprintf */
-INT32 safe_vasprintf(INT8 **, const INT8 *, va_list);
-
-/* @brief Safe version of fork */
-pid_t safe_fork(void);
-
-#endif                          /* _SAFE_H_ */
+#endif                          /* _COMMANDLINE_H_ */

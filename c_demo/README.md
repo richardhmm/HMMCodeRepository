@@ -7,11 +7,12 @@ Compile environment
 -----------
 aclocal
 autoconf
-automake --add-missing
+automake
 
 Build instructions
 -----------
-
+./autogen.sh
+make
 
 Path tree instructions
 -----------

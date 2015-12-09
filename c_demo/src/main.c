@@ -31,10 +31,11 @@
 #include "tcp_socket.h"
 #include "sh_exec.h"
 #include "minIni.h"
+#include "commandline.h"
 
 #define sizearray(a)  (sizeof(a) / sizeof((a)[0]))
 
-const char inifile[] = "./config/test.ini";
+const INT8 inifile[] = "./config/test.ini";
 
 /**
  * @brief print
@@ -51,6 +52,8 @@ main(INT32 argc, INT8 **argv)
 	INT32 n;
 
 	printf("hello c_demo\n");
+
+	parse_commandline(argc, argv);
 
 	/* string reading */
 	n = ini_gets("first", "string", "dummy", str, sizearray(str), inifile);
