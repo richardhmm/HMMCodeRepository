@@ -24,12 +24,17 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <assert.h>
 
 #include "types.h"
 #include "debug.h"
 #include "tcp_socket.h"
 #include "sh_exec.h"
+#include "minIni.h"
 
+#define sizearray(a)  (sizeof(a) / sizeof((a)[0]))
+
+const char inifile[] = "./config/test.ini";
 
 /**
  * @brief print
@@ -42,8 +47,21 @@ main(INT32 argc, INT8 **argv)
 	INT32 rc;
 	INT32 listenfd;
 	INT8 buffer[50];
+	INT8 str[100];
+	INT32 n;
 
-    printf("hello c_demo\n");
+	printf("hello c_demo\n");
+
+	/* string reading */
+	n = ini_gets("first", "string", "dummy", str, sizearray(str), inifile);
+	printf("str[] = %s\n", str);
+	assert(n == 4 && strcmp(str, "noot") == 0);
+	n = ini_gets("second", "string", "dummy", str, sizearray(str), inifile);
+	printf("str[] = %s\n", str);
+	assert(n == 4 && strcmp(str, "mies") == 0);
+	n = ini_gets("first", "undefined", "dummy", str, sizearray(str), inifile);
+	printf("str[] = %s\n", str);
+	assert(n == 5 && strcmp(str, "dummy") == 0);
 
     debugconf.debuglevel = LOG_DEBUG;
 
