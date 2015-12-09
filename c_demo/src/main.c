@@ -27,6 +27,9 @@
 
 #include "types.h"
 #include "debug.h"
+#include "tcp_socket.h"
+#include "sh_exec.h"
+
 
 /**
  * @brief print
@@ -52,6 +55,8 @@ main(INT32 argc, INT8 **argv)
     debug(LOG_NOTICE, "log level: notice");
     debug(LOG_INFO, "log level: info");
 	debug(LOG_DEBUG, "log level: debug");
+
+	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
 
 	listenfd = create_tcp_server(8008);
 	while (1) {

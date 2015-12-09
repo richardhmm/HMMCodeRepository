@@ -19,8 +19,8 @@
  * @author Copyright (C) 2015 Richard.hmm  <sunhyx@gmail.com>
  */
 
-#ifndef COMMON_TYPES_H_
-#define COMMON_TYPES_H_
+#ifndef _TYPES_H_
+#define _TYPES_H_
 
 typedef unsigned char Bool;
 #ifndef TRUE
@@ -50,6 +50,6 @@ typedef double FLOAT64;
 #define __UNUSED        __attribute__ ((unused))
 #define __PACKED        __attribute__ ((packed))
 #define __ALIGNED(n)    __attribute__ ((aligned(n))
-#define __WEAK          __attribute__((weak))
+#define __WEAK          __attribute__ ((weak))
 
-#endif // COMMON_TYPES_H_
+#endif /* _TYPES_H_ */
