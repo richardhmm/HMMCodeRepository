@@ -23,4 +23,10 @@ INT32 create_tcp_server(INT32 port);
  */
 INT32 wait_connect(INT32 fd);
 
+/**
+ * @brief tcp_server_loop wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_loop(INT32 port);
+
 #endif /* _TCP_SERVER_H_ */

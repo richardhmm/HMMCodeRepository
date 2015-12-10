@@ -99,3 +99,60 @@ INT32 wait_connect(INT32 fd)
 	rc = select(max_fd + 1, &fds, NULL, NULL, &timeout);
 	return rc;
 }
+
+/**
+ * @brief tcp_server_loop wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_loop(INT32 port)
+{
+	INT32 rc;
+	INT32 listenfd;
+	INT8 buffer[50];
+
+	listenfd = create_tcp_server(port);
+	while (1) {
+		INT32 clifd;
+		struct sockaddr_in cliaddr;
+		socklen_t clilen;
+
+		clilen = sizeof(cliaddr);
+		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen);
+		if (clifd < 0)
+			continue;
+
+		debug(LOG_NOTICE, "Connection established %s\r\n", inet_ntoa(cliaddr.sin_addr));
+		while (1) {
+			rc = wait_connect(clifd);
+
+			if (rc < 0) { // failed
+				debug(LOG_ERR, " recv() failed");
+				break;
+			}
+
+			if (rc > 0) { // something to read
+				rc = recv(clifd, buffer, sizeof(buffer), 0);
+				if (rc < 0) {
+					if (errno != EWOULDBLOCK) {
+						debug(LOG_ERR, " recv() failed");
+						break;
+					}
+				} else if (rc == 0) {
+					debug(LOG_NOTICE, "Connection closed\r\n");
+					break;
+				} else {
+					debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
+					rc = send(clifd, buffer, rc, 0);
+					if (rc < 0)
+					{
+						debug(LOG_ERR, "send() error\r\n");
+						break;
+					}
+					else
+						debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
+				}
+			}
+		}
+		close(clifd);
+	}
+}

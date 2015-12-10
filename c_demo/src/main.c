@@ -45,9 +45,6 @@ const INT8 inifile[] = "./config/test.ini";
 INT32
 main(INT32 argc, INT8 **argv)
 {
-	INT32 rc;
-	INT32 listenfd;
-	INT8 buffer[50];
 	INT8 str[100];
 	INT32 n;
 
@@ -79,51 +76,7 @@ main(INT32 argc, INT8 **argv)
 
 	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
 
-	listenfd = create_tcp_server(8008);
-	while (1) {
-		INT32 clifd;
-		struct sockaddr_in cliaddr;
-		socklen_t clilen;
-
-		clilen = sizeof(cliaddr);
-		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen);
-		if (clifd < 0)
-			continue;
-
-		debug(LOG_NOTICE, "Connection established %s\r\n", inet_ntoa(cliaddr.sin_addr));
-		while (1) {
-			rc = wait_connect(clifd);
-
-			if (rc < 0) { // failed
-				debug(LOG_ERR, " recv() failed");
-				break;
-			}
-
-			if (rc > 0) { // something to read
-				rc = recv(clifd, buffer, sizeof(buffer), 0);
-				if (rc < 0) {
-					if (errno != EWOULDBLOCK) {
-						debug(LOG_ERR, " recv() failed");
-						break;
-					}
-				} else if (rc == 0) {
-					debug(LOG_NOTICE, "Connection closed\r\n");
-					break;
-				} else {
-					debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
-					rc = send(clifd, buffer, rc, 0);
-					if (rc < 0)
-					{
-						debug(LOG_ERR, "send() error\r\n");
-						break;
-					}
-					else
-						debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
-				}
-			}
-		}
-		close(clifd);
-	}
+	tcp_server_loop(1984);
 
     return 0;
 }
