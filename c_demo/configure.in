@@ -4,19 +4,27 @@
 AC_PREREQ([2.69])
 AC_INIT([c_demo], [1.0], [sunhyx@gamil.com])
 AC_CONFIG_SRCDIR([src/main.c])
-#AC_CONFIG_HEADERS([config.h])
+AM_CONFIG_HEADER(config.h)
+AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(c_demo, 1.0)
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 
 # Checks for libraries.
+AC_PROG_RANLIB
+AM_MAINTAINER_MODE
 
-# Checks for header files.
+AC_PROG_INSTALL
 
-# Checks for typedefs, structures, and compiler characteristics.
+AC_LIBTOOL_DLOPEN
+AM_PROG_LIBTOOL
 
-# Checks for library functions.
+AC_ISC_POSIX
+AC_C_BIGENDIAN
+AC_PROG_MAKE_SET
+AC_HEADER_STDC
 
 AC_OUTPUT( 		Makefile 
 			src/Makefile

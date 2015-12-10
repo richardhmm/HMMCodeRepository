@@ -18,7 +18,7 @@
 #include <arpa/inet.h>
 
 #include "debug.h"
-#include "tcp_socket.h"
+#include "tcp_server.h"
 
 /**
  * @brief create_tcp_server

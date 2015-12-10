@@ -28,7 +28,7 @@
 
 #include "types.h"
 #include "debug.h"
-#include "tcp_socket.h"
+#include "tcp_server.h"
 #include "sh_exec.h"
 #include "minIni.h"
 #include "commandline.h"

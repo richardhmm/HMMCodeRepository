@@ -1,11 +1,11 @@
 
 /**
- * @file tcp_socket.h
+ * @file tcp_server.h
  * @brief  tcp socket
  */
 
-#ifndef _TCP_SOCKET_H_
-#define _TCP_SOCKET_H_
+#ifndef _TCP_SERVER_H_
+#define _TCP_SERVER_H_
 
 #include "types.h"
 
@@ -23,4 +23,4 @@ INT32 create_tcp_server(INT32 port);
  */
 INT32 wait_connect(INT32 fd);
 
-#endif /* _TCP_SOCKET_H_ */
+#endif /* _TCP_SERVER_H_ */
