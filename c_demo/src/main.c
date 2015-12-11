@@ -32,6 +32,7 @@
 #include "sh_exec.h"
 #include "minIni.h"
 #include "commandline.h"
+#include "udp_server.h"
 
 #define sizearray(a)  (sizeof(a) / sizeof((a)[0]))
 
@@ -76,7 +77,8 @@ main(INT32 argc, INT8 **argv)
 
 	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
 
-	tcp_server_loop(1984);
+//	tcp_server_loop(1984);
+	udp_server_loop(1984);
 
     return 0;
 }

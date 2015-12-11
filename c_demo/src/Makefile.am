@@ -14,7 +14,8 @@ libdemo_a_SOURCES = debug.c \
 	 sh_exec.c \
 	 safe.c \
 	 minIni.c \
-	 commandline.c 
+	 commandline.c \
+	 udp_server.c
 
 noinst_HEADERS = debug.h \
 	 tcp_server.h \
@@ -24,4 +25,5 @@ noinst_HEADERS = debug.h \
 	 minIni.h \
 	 commandline.h \
 	 common.h \
-	 types.h 
+	 types.h \
+	 udp_server.h

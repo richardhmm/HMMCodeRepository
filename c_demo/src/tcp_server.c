@@ -20,6 +20,8 @@
 #include "debug.h"
 #include "tcp_server.h"
 
+#define MAX_BUFF_SIZE 100
+
 /**
  * @brief create_tcp_server
  * @param port
@@ -108,7 +110,7 @@ void tcp_server_loop(INT32 port)
 {
 	INT32 rc;
 	INT32 listenfd;
-	INT8 buffer[50];
+	INT8 buffer[MAX_BUFF_SIZE];
 
 	listenfd = create_tcp_server(port);
 	while (1) {
