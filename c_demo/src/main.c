@@ -66,19 +66,19 @@ main(INT32 argc, INT8 **argv)
 
     debugconf.debuglevel = LOG_DEBUG;
 
-    debug(LOG_EMERG, "log level: emerg");
-    debug(LOG_ALERT, "log level: alert");
-    debug(LOG_CRIT, "log level: crit");
-    debug(LOG_ERR, "log level: error");
-    debug(LOG_WARNING, "log level: warning");
-    debug(LOG_NOTICE, "log level: notice");
-    debug(LOG_INFO, "log level: info");
-	debug(LOG_DEBUG, "log level: debug");
+//    debug(LOG_EMERG, "log level: emerg");
+//    debug(LOG_ALERT, "log level: alert");
+//    debug(LOG_CRIT, "log level: crit");
+//    debug(LOG_ERR, "log level: error");
+//    debug(LOG_WARNING, "log level: warning");
+//    debug(LOG_NOTICE, "log level: notice");
+//    debug(LOG_INFO, "log level: info");
+//	debug(LOG_DEBUG, "log level: debug");
+//
+//	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
 
-	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
-
-//	tcp_server_loop(1984);
-	udp_server_loop(1984);
+	tcp_server_loop(1984);
+//	udp_server_loop(1984);
 
     return 0;
 }

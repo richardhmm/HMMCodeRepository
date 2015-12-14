@@ -47,22 +47,6 @@ INT32 create_tcp_server(INT32 port)
 		exit(-1);
 	}
 
-	/* Set address reuse enable */
-	rc = setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (INT8 *) &on, sizeof(on));
-	if (rc < 0) {
-		debug(LOG_ERR, "setsockopt() failed");
-		close(fd);
-		exit(-1);
-	}
-
-	/* Set non blocking */
-	rc = ioctl(fd, FIONBIO, (INT8 *) &on);
-	if (rc < 0) {
-		debug(LOG_ERR, "ioctl() failed");
-		close(fd);
-		exit(-1);
-	}
-
 	/* Bind to socket */
 	rc = bind(fd, (struct sockaddr *) &servaddr, sizeof(servaddr));
 	if (rc < 0) {
@@ -72,7 +56,7 @@ INT32 create_tcp_server(INT32 port)
 	}
 
 	/* Listen on socket */
-	listen(fd, 1);
+	listen(fd, 5);
 	if (rc < 0) {
 		debug(LOG_ERR, "listen() failed");
 		close(fd);
@@ -119,42 +103,37 @@ void tcp_server_loop(INT32 port)
 		socklen_t clilen;
 
 		clilen = sizeof(cliaddr);
-		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen);
+		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen); // blocking
 		if (clifd < 0)
 			continue;
 
-		debug(LOG_NOTICE, "Connection established %s\r\n", inet_ntoa(cliaddr.sin_addr));
-		while (1) {
-			rc = wait_connect(clifd);
+		debug(LOG_NOTICE, "Connection established %s\r\n",
+				inet_ntoa(cliaddr.sin_addr));
 
-			if (rc < 0) { // failed
-				debug(LOG_ERR, " recv() failed");
-				break;
-			}
-
-			if (rc > 0) { // something to read
-				rc = recv(clifd, buffer, sizeof(buffer), 0);
-				if (rc < 0) {
-					if (errno != EWOULDBLOCK) {
-						debug(LOG_ERR, " recv() failed");
-						break;
-					}
-				} else if (rc == 0) {
-					debug(LOG_NOTICE, "Connection closed\r\n");
+		while(1)
+		{
+			// something to read
+			rc = recv(clifd, buffer, sizeof(buffer), 0);
+			if (rc < 0) {
+				if (errno != EWOULDBLOCK) {
+					debug(LOG_ERR, " recv() failed");
 					break;
-				} else {
-					debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
-					rc = send(clifd, buffer, rc, 0);
-					if (rc < 0)
-					{
-						debug(LOG_ERR, "send() error\r\n");
-						break;
-					}
-					else
-						debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
 				}
+			} else if (rc == 0) {
+				debug(LOG_NOTICE, "Connection closed\r\n");
+				break;
+			} else {
+				debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
+				rc = send(clifd, buffer, rc, 0);
+				if (rc < 0) {
+					debug(LOG_ERR, "send() error\r\n");
+					break;
+				} else
+					debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
 			}
 		}
+
 		close(clifd);
+		debug(LOG_NOTICE, "Connection closed %s\r\n", inet_ntoa(cliaddr.sin_addr));
 	}
 }

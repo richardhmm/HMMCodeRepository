@@ -72,6 +72,7 @@ void udp_server_loop(INT32 port)
 	size = sizeof(struct sockaddr_in);
 	fd = create_udp_server(port);
 	while (1) {
+		debug(LOG_INFO, "UDP connect ok");
 		num = recvfrom(fd, buffer, MAX_UDP_BUFF_SIZE, 0, (struct sockaddr *)&cliaddr, &size);
 		if (num < 0)
 		{
@@ -87,6 +88,9 @@ void udp_server_loop(INT32 port)
 
 		// send to udp client
 		sendto(fd, buffer, num, 0, (struct sockaddr *)&cliaddr, size);
+		usleep(10000); // 10ms
 	}
 	close(fd);
+	debug(LOG_INFO, "UDP close(fd)");
+	usleep(10000); // 10ms
 }
