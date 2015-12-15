@@ -14,7 +14,7 @@
  * @param port
  * @return fd
  */
-INT32 create_tcp_server(INT32 port);
+INT32 create_tcp_server(INT32 port, INT32 max_client_num);
 
 /**
  * @brief tcp_server wait for client connection
@@ -28,5 +28,11 @@ INT32 wait_connect(INT32 fd);
  * @param port listenfd's port
  */
 void tcp_server_loop(INT32 port);
+
+/**
+ * @brief tcp_server_pthread wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_pthread(INT32 port);
 
 #endif /* _TCP_SERVER_H_ */

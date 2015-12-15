@@ -15,6 +15,7 @@ AC_PROG_CXX
 # Checks for libraries.
 AC_PROG_RANLIB
 AM_MAINTAINER_MODE
+AC_CHECK_LIB([pthread], [main]) 
 
 AC_PROG_INSTALL
 

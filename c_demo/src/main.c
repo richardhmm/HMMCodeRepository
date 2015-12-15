@@ -77,7 +77,8 @@ main(INT32 argc, INT8 **argv)
 //
 //	shell_execute("echo \"c_demo\" >> /var/tmp/c_demo.log", 0);
 
-	tcp_server_loop(1984);
+//	tcp_server_loop(1984);
+	tcp_server_pthread(1984);
 //	udp_server_loop(1984);
 
     return 0;

@@ -16,6 +16,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
+#include <pthread.h>
 
 #include "debug.h"
 #include "tcp_server.h"
@@ -27,7 +28,7 @@
  * @param port
  * @return fd
  */
-INT32 create_tcp_server(INT32 port)
+INT32 create_tcp_server(INT32 port, INT32 max_client_num)
 {
 	INT32 fd;
 	INT32 rc;
@@ -56,7 +57,8 @@ INT32 create_tcp_server(INT32 port)
 	}
 
 	/* Listen on socket */
-	listen(fd, 5);
+	listen(fd, max_client_num);
+	debug(LOG_NOTICE, "max_client_num=%d\r\n", max_client_num);
 	if (rc < 0) {
 		debug(LOG_ERR, "listen() failed");
 		close(fd);
@@ -96,7 +98,7 @@ void tcp_server_loop(INT32 port)
 	INT32 listenfd;
 	INT8 buffer[MAX_BUFF_SIZE];
 
-	listenfd = create_tcp_server(port);
+	listenfd = create_tcp_server(port, 5);
 	while (1) {
 		INT32 clifd;
 		struct sockaddr_in cliaddr;
@@ -135,5 +137,84 @@ void tcp_server_loop(INT32 port)
 
 		close(clifd);
 		debug(LOG_NOTICE, "Connection closed %s\r\n", inet_ntoa(cliaddr.sin_addr));
+	}
+}
+
+/**
+ * @brief echo_request
+ * @param arg
+ */
+static void *echo_request(void *fd)
+{
+	INT32 connfd = *((INT32 *)fd);
+	INT8 buffer[MAX_BUFF_SIZE];
+	INT32 rc;
+
+	pthread_detach(pthread_self());
+
+	while(1)
+	{
+		// echo
+		rc = recv(connfd, buffer, sizeof(buffer), 0);
+		if (rc > 0)
+		{
+			debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
+			rc = send(connfd, buffer, rc, 0);
+			if (rc > 0)
+				debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
+			else
+			{
+				debug(LOG_ERR, "send() error\r\n");
+				break;
+			}
+		}
+		else if (rc == 0)
+		{
+			debug(LOG_NOTICE, "Connection closed\r\n");
+			break;
+		}
+		else
+		{
+			debug(LOG_ERR, "recv() error\r\n");
+			break;
+		}
+	}
+	free(fd);
+	close(connfd);
+	pthread_exit(NULL);
+}
+
+/**
+ * @brief tcp_server_pthread wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_pthread(INT32 port)
+{
+	INT32 rc;
+	INT32 listenfd;
+	INT8 buffer[MAX_BUFF_SIZE];
+	INT32 *clifd;
+	struct sockaddr_in cliaddr;
+	socklen_t clilen;
+
+	listenfd = create_tcp_server(port, 5);
+	while (1) {
+		pthread_t tid;
+
+		clifd = (INT32 *)malloc(sizeof(INT32));
+		clilen = sizeof(cliaddr);
+		*clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen); // blocking
+		if (*clifd < 0)
+			continue;
+
+		debug(LOG_NOTICE, "Connection established %s\r\n",
+				inet_ntoa(cliaddr.sin_addr));
+
+		if (0 != pthread_create(&tid, NULL, echo_request, clifd))
+		{
+			debug(LOG_ERR, "pthread_create\r\n");
+			break;
+		}
+
 	}
 }
