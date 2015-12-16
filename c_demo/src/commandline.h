@@ -34,6 +34,11 @@
  */
 extern INT8 **restartargv;
 
+/*
+ * daemon flag
+ */
+extern INT8 is_daemon;
+
 /**
  * A flag to denote whether we were restarted via a parent wifidog, or started normally
  * 0 means normally, otherwise it will be populated by the PID of the parent

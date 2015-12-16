@@ -42,6 +42,11 @@
  */
 INT8 ** restartargv = NULL;
 
+/*
+ * daemon flag
+ */
+INT8 is_daemon = 1;
+
 /**
  * A flag to denote whether we were restarted via a parent wifidog, or started normally
  * 0 means normally, otherwise it will be populated by the PID of the parent
@@ -85,7 +90,7 @@ parse_commandline(INT32 argc, INT8 **argv)
     i = 0;
     restartargv[i++] = safe_strdup(argv[0]);
 
-    while (-1 != (c = getopt(argc, argv, "c:hfd:sw:vx:i:a:"))) {
+    while (-1 != (c = getopt(argc, argv, "c:hfd:sv"))) {
 
         skiponrestart = 0;
 
@@ -107,6 +112,7 @@ parse_commandline(INT32 argc, INT8 **argv)
         case 'f':
             skiponrestart = 1;
 //            config->daemon = 0;
+            is_daemon = 0;
             debugconf.log_stderr = 1;
             break;
 

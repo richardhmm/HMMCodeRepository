@@ -54,7 +54,7 @@ _debug(const INT8 *filename, INT16 line, INT16 level, const INT8 *format, ...)
         }
 
         if (debugconf.log_syslog) {
-            openlog("wifidog", LOG_PID, debugconf.syslog_facility);
+            openlog("richardhmm", LOG_PID, debugconf.syslog_facility);
             va_start(vlist, format);
             vsyslog(level, format, vlist);
             va_end(vlist);

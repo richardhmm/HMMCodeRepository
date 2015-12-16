@@ -17,11 +17,50 @@
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <sys/wait.h>
 
 #include "debug.h"
 #include "tcp_server.h"
 
 #define MAX_BUFF_SIZE 100
+
+typedef void sigfunc(INT32);
+
+static void func_waitpid(INT32 signo)
+{
+	pid_t pid;
+	INT32 stat;
+	while ((pid = waitpid(-1, &stat, WNOHANG)) > 0)
+	{
+		debug(LOG_ERR, "child %d exit", pid);
+	}
+	return;
+}
+
+static sigfunc* thread_signal(INT32 signo, sigfunc *func)
+{
+	struct sigaction act, oact;
+	act.sa_handler = func;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (signo == SIGALRM)
+	{
+#ifdef            SA_INTERRUPT
+		act.sa_flags |= SA_INTERRUPT; /* SunOS 4.x */
+#endif
+	}
+	else
+	{
+#ifdef           SA_RESTART
+		act.sa_flags |= SA_RESTART; /* SVR4, 4.4BSD */
+#endif
+	}
+	if (sigaction(signo, &act, &oact) < 0)
+	{
+		return SIG_ERR;
+	}
+	return oact.sa_handler;
+}
 
 /**
  * @brief create_tcp_server
@@ -66,26 +105,6 @@ INT32 create_tcp_server(INT32 port, INT32 max_client_num)
 	}
 
 	return fd;
-}
-
-/**
- * @brief tcp_server wait for client connection
- * @param fd
- * @return result
- */
-INT32 wait_connect(INT32 fd)
-{
-	fd_set fds;
-	struct timeval timeout;
-	INT32 rc;
-	INT32 max_fd;
-	FD_ZERO(&fds);
-	max_fd = fd;
-	FD_SET(fd, &fds);
-	timeout.tv_sec = 5;
-	timeout.tv_usec = 0;
-	rc = select(max_fd + 1, &fds, NULL, NULL, &timeout);
-	return rc;
 }
 
 /**
@@ -216,5 +235,85 @@ void tcp_server_pthread(INT32 port)
 			break;
 		}
 
+	}
+}
+
+/**
+ * @brief do_echo echo request
+ * @param userfd
+ */
+static void do_echo(INT32 userfd)
+{
+	INT8 buffer[MAX_BUFF_SIZE];
+	INT32 rc;
+
+	while(1)
+	{
+		// echo
+		rc = recv(userfd, buffer, sizeof(buffer), 0);
+		if (rc > 0)
+		{
+			debug(LOG_NOTICE, "recv() ok, rc = %d\r\n", rc);
+			rc = send(userfd, buffer, rc, 0);
+			if (rc > 0)
+				debug(LOG_NOTICE, "send() ok, rc = %d\r\n", rc);
+			else
+			{
+				debug(LOG_ERR, "send() error\r\n");
+				break;
+			}
+		}
+		else if (rc == 0)
+		{
+			debug(LOG_NOTICE, "Connection closed\r\n");
+			break;
+		}
+		else
+		{
+			debug(LOG_ERR, "recv() error\r\n");
+			break;
+		}
+	}
+
+	close(userfd);
+}
+
+/**
+ * @brief tcp_server_thread wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_thread(INT32 port)
+{
+	INT32 rc;
+	INT32 listenfd;
+	INT8 buffer[MAX_BUFF_SIZE];
+	INT32 clifd;
+	struct sockaddr_in cliaddr;
+	socklen_t clilen;
+	pid_t child_pid;
+
+	thread_signal(SIGCHLD, &func_waitpid);
+
+	listenfd = create_tcp_server(port, 5);
+	while (1) {
+		clilen = sizeof(cliaddr);
+		clifd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen); // blocking
+		if (clifd < 0)
+			continue;
+
+		debug(LOG_NOTICE, "Connection established %s\r\n",
+				inet_ntoa(cliaddr.sin_addr));
+
+		// create child thread to deal with tcp client session
+		if (0 == safe_fork())
+		{
+			child_pid = getpid();
+			debug(LOG_NOTICE, "child %d setup\r\n", child_pid);
+
+			close(listenfd);  // close parent thread fd
+			do_echo(clifd);
+			exit(0);
+		}
+		close(clifd); // fork fail
 	}
 }
