@@ -9,6 +9,17 @@
 
 #include "types.h"
 
+#define MAX_STRING_LEN  30
+#define MAX_BUFF_SIZE      320
+
+typedef struct _CLIENT
+{
+    int fd;                     //客户端socket描述符
+    char name[MAX_STRING_LEN];              //客户端名称
+    struct sockaddr_in addr;    //客户端地址信息结构体
+    char data[MAX_BUFF_SIZE];     //客户端私有数据指针
+} CLIENT;
+
 /**
  * @brief create_tcp_server
  * @param port

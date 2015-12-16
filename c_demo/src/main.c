@@ -142,7 +142,8 @@ main(INT32 argc, INT8 **argv)
 
 //	tcp_server_loop(1984);
 //	tcp_server_pthread(1984);
-	tcp_server_thread(1984);
+//	tcp_server_thread(1984);
+	tcp_server_select(19840);
 //	udp_server_loop(1984);
 
     return 0;

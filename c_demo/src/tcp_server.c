@@ -22,8 +22,6 @@
 #include "debug.h"
 #include "tcp_server.h"
 
-#define MAX_BUFF_SIZE 100
-
 typedef void sigfunc(INT32);
 
 static void func_waitpid(INT32 signo)
@@ -316,4 +314,134 @@ void tcp_server_thread(INT32 port)
 		}
 		close(clifd); // fork fail
 	}
+}
+
+/**
+ * @brief process_client echo request
+ */
+static void process_client(CLIENT * client, INT8 *buff, int len)
+{
+	INT32 rc;
+
+	debug(LOG_NOTICE, "Received client( %s ) message: %s\n", client->name, buff);
+
+	rc = send(client->fd, buff, len, 0);
+	if (rc > 0)
+		debug(LOG_NOTICE, "send() ok, rc = %d, send_buff: %s\r\n", rc, buff);
+	else
+	{
+		debug(LOG_ERR, "send() error\r\n");
+	}
+}
+
+/**
+ * @brief tcp_server_select wait for client connection
+ * @param port listenfd's port
+ */
+void tcp_server_select(INT32 port)
+{
+	INT32 rc;
+	INT8 buffer[MAX_BUFF_SIZE];
+	struct sockaddr_in cliaddr;
+	INT32 i, maxi, maxfd, sockfd;
+	INT32 nready;
+	INT32 n;
+    fd_set rset, allset;        // select file set
+    INT32 listenfd, connectfd;    //socket fd
+    CLIENT client[FD_SETSIZE];  //FD_SETSIZE为select函数支持的最大描述符个数
+    INT32 sin_size;               //地址信息结构体大小
+
+	listenfd = create_tcp_server(port, 5);
+	INT32 opt = SO_REUSEADDR;
+	setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)); //设置socket属性
+
+	//初始化select
+	maxfd = listenfd;
+	maxi = -1;
+	for (i = 0; i < FD_SETSIZE; i++)
+	{
+		client[i].fd = -1;
+	}
+	FD_ZERO(&allset);           //清空
+	FD_SET(listenfd, &allset);  //将监听socket加入select检测的描述符集合
+
+    while (1)
+	{
+		rset = allset;
+		nready = select(maxfd + 1, &rset, NULL, NULL, NULL);    //调用select
+		debug(LOG_NOTICE, "Select() and the return num is %d. \n", nready);
+
+		if (FD_ISSET(listenfd, &rset))
+		{                       //检测是否有新客户端请求
+			debug(LOG_NOTICE, "Accept a connection.\n");
+
+			//调用accept，返回服务器与客户端连接的socket描述符
+			sin_size = sizeof(struct sockaddr_in);
+			if ((connectfd = accept(listenfd, (struct sockaddr *) &cliaddr,
+					(socklen_t *) &sin_size)) == -1)
+			{
+				debug(LOG_ERR, "Accept() error\n");
+				continue;
+			}
+
+			//将新客户端的加入数组
+			for (i = 0; i < FD_SETSIZE; i++)
+			{
+				if (client[i].fd < 0)
+				{
+					char buffer[20];
+					client[i].fd = connectfd;   //保存客户端描述符
+					memset(buffer, '0', sizeof(buffer));
+					sprintf(buffer, "Client[%.2d]", i);
+					memcpy(client[i].name, buffer, strlen(buffer));
+					client[i].addr = cliaddr;
+					memset(buffer, '0', sizeof(buffer));
+					sprintf(buffer, "Only For Test!");
+					memcpy(client[i].data, buffer, strlen(buffer));
+					debug(LOG_NOTICE, "You got a connection from %s:%d.\n",
+							inet_ntoa(client[i].addr.sin_addr),
+							ntohs(client[i].addr.sin_port));
+					debug(LOG_NOTICE, "Add a new connection:%s\n", client[i].name);
+					break;
+				}
+			}
+
+			if (i == FD_SETSIZE)
+				debug(LOG_NOTICE, "Too many clients\n");
+
+			FD_SET(connectfd, &allset); //将新socket连接放入select监听集合
+			if (connectfd > maxfd)
+				maxfd = connectfd;  //确认maxfd是最大描述符
+			if (i > maxi)       //数组最大元素值
+				maxi = i;
+			if (--nready <= 0)
+				continue;       //如果没有新客户端连接，继续循环
+		}
+
+		for (i = 0; i <= maxi; i++)
+		{
+			if ((sockfd = client[i].fd) < 0)    //如果客户端描述符小于0，则没有客户端连接，检测下一个
+				continue;
+
+			// 有客户连接，检测是否有数据
+			if (FD_ISSET(sockfd, &rset))
+			{
+				debug(LOG_NOTICE, "Receive from connect fd[%d].\n", i);
+				if ((n = recv(sockfd, buffer, MAX_BUFF_SIZE, 0)) == 0)
+				{               //从客户端socket读数据，等于0表示网络中断
+					close(sockfd);  //关闭socket连接
+					debug(LOG_ERR, "%s closed. User's data: %s\n", client[i].name,
+							client[i].data);
+					FD_CLR(sockfd, &allset);    //从监听集合中删除此socket连接
+					client[i].fd = -1;  //数组元素设初始值，表示没客户端连接
+				}
+				else
+					process_client(&client[i], buffer, n); //接收到客户数据，开始处理
+
+				if (--nready <= 0)
+					break;      //如果没有新客户端有数据，跳出for循环回到while循环
+			}
+		}
+	}
+	close(listenfd);            //关闭服务器监听socket
 }

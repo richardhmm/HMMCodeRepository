@@ -14,7 +14,7 @@
  limitations under the License.
  */
 /**
- * @file common.h
+ * @file types.h
  * @brief  common data types defintion
  * @author Copyright (C) 2015 Richard.hmm  <sunhyx@gmail.com>
  */
