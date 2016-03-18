@@ -1,0 +1,5 @@
+AUTOMAKE_OPTIONS=foreign
+SUBDIRS=src
+CURRENTPATH=$(shell /bin/pwd)
+INCLUDES=-I$(CURRENTPATH)/src/inc
+export INCLUDES
