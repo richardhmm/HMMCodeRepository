@@ -4,11 +4,17 @@ https://github.com/langsim/vim-ide
 
 ### 常用命令
 1 F2打开当前工程.
+
 2 F5更新工程index.
+
 3 Ctrl-O返回上次位置.
+
 4 :cs find s wrod查找工程内变量或函数.
+
 5 :cs find t word查找工程内文本.
+
 6 :Tlist打开tags列表.
+
 7 Ctrl-]跳转到工程内变量或函数的定义处.
 
 ### how to use it read and write c/c++ project
