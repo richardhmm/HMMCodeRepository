@@ -1,103 +1,176 @@
-syntax enable " 开启语法高亮功能
-syntax on " 允许用指定语法高亮配色方案替换默认方案
+" .vimrc - Vim configuration file.
+"
+" Copyright (c) 2010 Jeffy Du. All Rights Reserved.
+"
+" Maintainer: Jeffy Du <jeffy.du@gmail.com>
+"    Created: 2010-01-01
+" LastChange: 2010-04-22
 
-filetype plugin off
-filetype indent on
 
-set number " 显示行号
+
+" LastChange: 2010-04-22
+" GENERAL SETTINGS: {{{1
+" To use VIM settings, out of VI compatible mode.
+set nocompatible
+" Enable file type detection.
+filetype plugin indent on
+" Syntax highlighting.
+syntax on
+" Setting colorscheme
+color mycolor
+" Other settings.
+set   autoindent
+set   autoread
+set   autowrite
+set   background=dark
+set   backspace=indent,eol,start
+set nobackup
+set   cindent
+set   cinoptions=:0
+"set   cursorline
+set   completeopt=longest,menuone
+set noexpandtab
+set   fileencodings=utf-8,gb2312,gbk,gb18030
+set   fileformat=unix
+set   foldenable
+set   foldmethod=marker
+set   guioptions-=T
+set   guioptions-=m
+set   guioptions-=r
+set   guioptions-=l
+set   helpheight=10
+set   helplang=cn
+set   hidden
+set   history=100
+set   hlsearch
+set   ignorecase
+set   incsearch
+set   laststatus=2
+set   mouse=v
+set   number
+set   pumheight=10
+set   ruler
+set   scrolloff=5
+set   shiftwidth=4
+set   showcmd
+set   smartindent
+set   smartcase
+set   tabstop=4
+set   termencoding=utf-8
+set   textwidth=80
+set   whichwrap=h,l
+set   wildignore=*.bak,*.o,*.e,*~
+set   wildmenu
+set   wildmode=list:longest,full
+set nowrap
 
 " 高亮显示当前行/列
 set cursorline
 set cursorcolumn
-
 set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 
-set t_Co=256
-set background=dark  "dark light "can switch it to find which is look pretty
-set nocompatible                 "some plugin need it
-set hlsearch                     "highlight the search
-set incsearch                    "move to fit position after one char input
-set nobackup                     "won't produce the backup file when save file
-set nowritebackup                "won't produce the backup file when save file
-set noswapfile                   "won't use swapfile
-set hidden                       "can open other file when a file is not saved
-set ruler                        "show ruler at the right bottom
-set nowrap                       "disable auto newline
-set laststatus=2                 "status bar will show anytime
-set updatetime=200               "tagbar response 800ms
-set showmatch matchtime=0        "show the other bracket
-set wmnu wildmode=longest:full   "when in command mode can use auto complete same as bash
-set expandtab tabstop=4          "expand the tab to 4 space
-set si ai ci cinkeys-=0# cinoptions=g0,:0   "some indent rules
-set shiftwidth=4                 "make the indent 4 length
-set softtabstop=4                "backspace can del 4 space
-set lcs=eol:$,tab:\|\            "display tab to green line
-set backspace=indent,eol,start   "better backspace
-set fileencodings=utf-8,cp936    "auto test the file is uft-8 or cp936
-set fileformats=unix,dos,mac     "line feed different in different mode
-set completeopt=menuone,longest
+" AUTO COMMANDS: {{{1
+" auto expand tab to blanks
+"autocmd FileType c,cpp set expandtab
+" Restore the last quit position when open file.
+"autocmd BufReadPost *
+"    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+"    \     exe "normal g'\"" |
+"   \ endif
 
-highlight TagbarHighlight guifg=Green ctermfg=Green
-let NERDTreeQuitOnOpen=1
-let NERDTreeDirArrows=0
-let NERDTreeWinSize=40
-let NERDRemoveExtraSpaces=0
+au BufReadPost * if line("'\"") > 0 | if line("'\"") <= line("$")| exe ("norm'\"") | else | exe "norm $" | endif | endif
+
+" SHORTCUT SETTINGS: {{{1
+" Set mapleader
+let mapleader=","
+" Space to command mode.
+nnoremap <space> :
+vnoremap <space> :
+" Switching between buffers.
+nnoremap <C-h> <C-W>h
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+inoremap <C-h> <Esc><C-W>h
+inoremap <C-j> <Esc><C-W>j
+inoremap <C-k> <Esc><C-W>k
+inoremap <C-l> <Esc><C-W>l
 
 
-"file list
-map <silent> <F2> :NERDTreeToggle<cr>
-"tarbar functon list
-map <silent> <F3> :TagbarToggle<cr>
-"header and implement file switch
-map <F4> :A<cr>
-"update index
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<cr><cr>:cs kill cscope.out<cr>:!cscope -Rb<cr><cr>:cs add cscope.out<cr>
-"switch display invisable char or not
-map <F6> :set list!<cr>:set list?<cr>
-"highlight
-map <F7> ms:%s /\<<C-R>=expand("<cword>")<CR>\>//gn<cr>`s
-"swapfile list
-map <silent> <F8> :BufExplorer<CR>
-"switch tab expand to space or not
-map <F9> :set expandtab!<cr>:set expandtab?<cr>
-"switch tab expand to space or not
-map <silent> <F10> :call Turntabstop()<cr>:set tabstop?<cr>
-""comment visual line
-vnoremap <silent> , :call NERDComment(1, "alignLeft")<cr>
-"uncomment visual line
-vnoremap <silent> . :call NERDComment(1, "uncomment")<cr>
-"show list if more tag 
-nnoremap <c-]> g<c-]>
-"move to right window
-noremap <c-l> <c-w>l
-"move to up window
-noremap <c-k> <c-w>k
-"move to down window
-noremap <c-j> <c-w>j
-"move to left window
-noremap <c-h> <c-w>h
-"goto the place where word definition
-nmap <C-[>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-"list the funcion called by this function
-nmap <C-[>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-"list the position where to call this word
-nmap <C-[>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-"search word in the project
-nmap <C-[>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-"search word in the project and the word can be in text
-nmap <C-[>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-"search word in the project and the word can be in text, support regex
-nmap <C-[>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-"list the file which filename is this word
-nmap <C-[>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-"list the file include the file which filename is this word
-nmap <C-[>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"list the file which include this file
-nmap <C-[>I :cs find i <C-R>=expand("%:t")<CR><CR>
 
-if has("cscope") 
-    set nocsverb
-    if filereadable("cscope.out")
-        cs add cscope.out
-    endif
+" "cd" to change to open directory.
+let OpenDir=system("pwd")
+nmap <silent> <leader>cd :exe 'cd ' . OpenDir<cr>:pwd<cr>
+
+" PLUGIN SETTINGS: {{{1
+" taglist.vim
+let g:Tlist_Auto_Update=1
+let g:Tlist_Process_File_Always=1
+let g:Tlist_Exit_OnlyWindow=1
+let g:Tlist_Show_One_File=1
+let g:Tlist_WinWidth=25
+let g:Tlist_Enable_Fold_Column=0
+let g:Tlist_Auto_Highlight_Tag=1
+" NERDTree.vim
+let g:NERDTreeWinPos="right"
+let g:NERDTreeWinSize=25
+let g:NERDTreeShowLineNumbers=1
+let g:NERDTreeQuitOnOpen=1
+
+" OmniCppComplete.vim
+let g:OmniCpp_DefaultNamespaces=["std"]
+let g:OmniCpp_MayCompleteScope=1
+let g:OmniCpp_SelectFirstItem=2
+" VimGDB.vim
+if has("gdb")
+	set asm=0
+	let g:vimgdb_debug_file=""
+	run macros/gdb_mappings.vim
+endif
+" LookupFile setting
+let g:LookupFile_TagExpr='"./tags.filename"'
+let g:LookupFile_MinPatLength=2
+let g:LookupFile_PreserveLastPattern=0
+let g:LookupFile_PreservePatternHistory=1
+let g:LookupFile_AlwaysAcceptFirst=1
+let g:LookupFile_AllowNewFiles=0
+" Man.vim
+source $VIMRUNTIME/ftplugin/man.vim
+" snipMate
+let g:snips_author="Du Jianfeng"
+let g:snips_email="cmdxiaoha@163.com"
+let g:snips_copyright="SicMicro, Inc"
+" plugin shortcuts
+function! RunShell(Msg, Shell)
+	echo a:Msg . '...'
+	call system(a:Shell)
+	echon 'done'
+endfunction
+nmap  <F2> :TlistToggle<cr>
+nmap  <F3> :NERDTreeToggle<cr>
+nmap  <F4> :MRU<cr>
+nmap  <F5> <Plug>LookupFile<cr>
+nmap  <F6> :vimgrep /<C-R>=expand("<cword>")<cr>/ **/*.c **/*.h<cr><C-o>:cw<cr>
+" nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
+map <F9> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<cr><cr>:cs kill cscope.out<cr>:!cscope -Rb<cr><cr>:cs add cscope.out<cr>
+nmap <F10> :call HLUDSync()<cr>
+nmap <F11> :call RunShell("Generate filename tags", "~/.vim/shell/genfiletags.sh")<cr>
+nmap <F12> :call RunShell("Generate cscope", "cscope -Rb")<cr>:cs add cscope.out<cr>
+nmap <leader>sa :cs add cscope.out<cr>
+nmap <leader>ss :cs find s <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sg :cs find g <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sc :cs find c <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>st :cs find t <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>se :cs find e <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<cr><cr>
+nmap <leader>si :cs find i <C-R>=expand("<cfile>")<cr><cr>
+nmap <leader>sd :cs find d <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>zz <C-w>o
+nmap <leader>gs :GetScripts<cr>
+
+if has("cscope")
+	set nocsverb
+	if filereadable("cscope.out")
+		cs add cscope.out
+	endif
 endif

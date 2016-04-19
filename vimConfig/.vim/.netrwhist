@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/bin'
+let g:netrw_dirhist_2='/home'
+let g:netrw_dirhist_3='/home/aa'
+let g:netrw_dirhist_4='/home/linux/io/01/a'
+let g:netrw_dirhist_5='/home/linux/io/02/open.c'
+let g:netrw_dirhist_6='/home/linux/io/02'
